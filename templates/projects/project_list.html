@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block title %}Мои проекты - Python Developer{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1 class="mb-4">Мои проекты</h1>
+        
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Фильтр по технологиям</h5>
+                <div class="d-flex flex-wrap gap-2">
+                    <a href="?technology=" class="btn btn-sm btn-outline-secondary">Все</a>
+                    {% for tech_value, tech_name in technology_list %}
+                    <a href="?technology={{ tech_value }}" 
+                       class="btn btn-sm btn-outline-primary {% if technology_filter == tech_value %}active{% endif %}">
+                        {{ tech_name }}
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            {% for project in projects %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100">
+                    {% if project.image %}
+                    <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}" style="height: 200px; object-fit: cover;">
+                    {% else %}
+                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <i class="fas fa-code fa-3x text-muted"></i>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="card-body">
+                        <h5 class="card-title">{{ project.title }}</h5>
+                        <p class="card-text">{{ project.description|truncatewords:30 }}</p>
+                        
+                        <div class="mb-3">
+                            <span class="badge bg-primary">{{ project.technology }}</span>
+                            {% if project.star_count > 0 %}
+                            <span class="ms-2 text-muted">
+                                <i class="fas fa-star text-warning"></i> {{ project.star_count }}
+                            </span>
+                            {% endif %}
+                            {% if project.fork_count > 0 %}
+                            <span class="ms-2 text-muted">
+                                <i class="fas fa-code-branch text-info"></i> {{ project.fork_count }}
+                            </span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="card-footer">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="{% url 'project_detail' project.pk %}" class="btn btn-sm btn-outline-primary">
+                                Подробнее
+                            </a>
+                            <small class="text-muted">{{ project.created_on|date:"d.m.Y" }}</small>
+                        </div>
+                        
+                        {% if project.github_link or project.project_link %}
+                        <div class="mt-2">
+                            {% if project.github_link %}
+                            <a href="{{ project.github_link }}" target="_blank" class="btn btn-sm btn-outline-dark me-1">
+                                <i class="fab fa-github"></i> Code
+                            </a>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <div class="alert alert-info text-center">
+                    <h4>Проекты не найдены</h4>
+                    <p>Пока нет проектов{% if technology_filter %} по технологии "{{ technology_filter }}"{% endif %}.</p>
+                    {% if technology_filter %}
+                    <a href="?technology=" class="btn btn-primary">Показать все проекты</a>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="mt-4">
+            <a href="{% url 'home' %}" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left"></i> На главную
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

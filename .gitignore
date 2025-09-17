@@ -1,0 +1,31 @@
+echo "# Django
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+.DS_Store
+
+# Database
+db.sqlite3
+
+# Environment
+.env
+.venv/
+venv/
+env/
+
+# Static and media files
+/media/
+/staticfiles/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+Thumbs.db
+
+# Logs
+*.log" > .gitignore

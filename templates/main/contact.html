@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}Контакты - Python Developer{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <h1 class="mb-4">Контакты</h1>
+        
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="card mb-4">
+            <div class="card-body">
+                <h4 class="card-title">Свяжитесь со мной</h4>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Имя</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="message" class="form-label">Сообщение</label>
+                        <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Отправить</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Контактная информация</h4>
+                <ul class="list-unstyled">
+                    <li><i class="fas fa-envelope me-2"></i> smotrova.annaa@mail.ru</li>
+                    <li><i class="fab fa-github me-2"></i> github.com/AnnaSmotrova</li>
+                    <li><i class="fab fa-telegram me-2"></i> @Dyffin</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

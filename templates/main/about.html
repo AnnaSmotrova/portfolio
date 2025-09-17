@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Обо мне - Python Developer{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <h1 class="mb-4">Обо мне</h1>
+        
+        <div class="card mb-4">
+            <div class="card-body">
+                <h3 class="card-title">Привет! Я начинающий Python разработчик</h3>
+                <p class="card-text">
+                    Я начинающий Python-бэкенд разработчик с фокусом на создании 
+                    высоконагруженных и масштабируемых серверных приложений. 
+                    Углубляю знания в области оптимизации и архитектуры, параллельно обучаясь в магистратуре 
+                    по искусственному интеллекту, что позволяет применять передовые подходы для решения сложных задач.
+                    Опыт в образовании и администрировании позволил мне развить ключевые soft skills: 
+                    работу в условиях многозадачности, стрессоустойчивость и четкую коммуникацию.
+                </p>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-body">
+                <h4 class="card-title">Навыки</h4>
+                {% for skill in skills %}
+                <div class="mb-3">
+                    <strong>{{ skill.name }}</strong>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" 
+                             style="width: {{ skill.level }}%" 
+                             aria-valuenow="{{ skill.level }}" 
+                             aria-valuemin="0" 
+                             aria-valuemax="100">
+                            {{ skill.level }}%
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+{% endblock %}

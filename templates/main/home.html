@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="hero-section text-center py-5 bg-light rounded mb-5">
+    <div class="container">
+        <h1 class="display-4">Python Backend Developer</h1>
+        <p class="lead">Создаю качественные веб-приложения на Django</p>
+        <a href="{% url 'project_list' %}" class="btn btn-primary btn-lg">Мои проекты</a>
+        <a href="{% url 'about' %}" class="btn btn-outline-secondary btn-lg ms-2">Обо мне</a>
+    </div>
+</div>
+
+<!-- Избранные проекты -->
+<section class="mb-5">
+    <h2 class="mb-4">Избранные проекты</h2>
+    <div class="row">
+        {% for project in featured_projects %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                {% if project.image %}
+                <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ project.title }}</h5>
+                    <p class="card-text">{{ project.description|truncatewords:20 }}</p>
+                    <span class="badge bg-secondary">{{ project.technology }}</span>
+                    {% if project.star_count > 0 %}
+                    <span class="ms-2"><i class="fas fa-star"></i> {{ project.star_count }}</span>
+                    {% endif %}
+                </div>
+                <div class="card-footer">
+                    <a href="{% url 'project_detail' project.pk %}" class="btn btn-sm btn-outline-primary">Подробнее</a>
+                    {% if project.github_link %}
+                    <a href="{{ project.github_link }}" target="_blank" class="btn btn-sm btn-outline-dark ms-1">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="alert alert-info">
+                <p>Проекты пока не добавлены. Добавьте их через админ-панель!</p>
+                <a href="/admin/projects/project/add/" class="btn btn-sm btn-primary">Добавить проект</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    {% if featured_projects %}
+    <div class="text-center mt-4">
+        <a href="{% url 'project_list' %}" class="btn btn-outline-primary">Все проекты</a>
+    </div>
+    {% endif %}
+</section>
+
+<!-- Секция навыков на главной -->
+<section class="mb-5">
+    <h2 class="mb-4">Мои технологии</h2>
+    <div class="row text-center">
+        <div class="col-md-2 col-4 mb-3">
+            <div class="tech-item">
+                <i class="fab fa-python fa-3x text-primary mb-2"></i>
+                <p>Python</p>
+            </div>
+        </div>
+        <div class="col-md-2 col-4 mb-3">
+            <div class="tech-item">
+                <i class="fab fa-django fa-3x text-success mb-2"></i>
+                <p>Django</p>
+            </div>
+        </div>
+        <div class="col-md-2 col-4 mb-3">
+            <div class="tech-item">
+                <i class="fas fa-database fa-3x text-info mb-2"></i>
+                <p>PostgreSQL</p>
+            </div>
+        </div>
+        <div class="col-md-2 col-4 mb-3">
+            <div class="tech-item">
+                <i class="fab fa-html5 fa-3x text-danger mb-2"></i>
+                <p>HTML/CSS</p>
+            </div>
+        </div>
+        <div class="col-md-2 col-4 mb-3">
+            <div class="tech-item">
+                <i class="fab fa-js-square fa-3x text-warning mb-2"></i>
+                <p>JavaScript</p>
+            </div>
+        </div>
+        <div class="col-md-2 col-4 mb-3">
+            <div class="tech-item">
+                <i class="fab fa-docker fa-3x text-primary mb-2"></i>
+                <p>Docker</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
